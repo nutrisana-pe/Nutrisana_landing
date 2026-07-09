@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriSana – Snack Funcional para Estudiantes y Trabajadores</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold-50: oklch(97% 0.025 80); --gold-100: oklch(93% 0.05 78); --gold-200: oklch(86% 0.09 76);
+  --gold-300: oklch(78% 0.13 74); --gold-400: oklch(72% 0.145 72); --gold-500: oklch(65% 0.14 70);
+  --gold-600: oklch(55% 0.12 68); --gold-700: oklch(42% 0.09 65);
+  --green-50: oklch(96% 0.025 150); --green-100: oklch(92% 0.04 148);
+  --green-500: oklch(52% 0.13 152); --green-600: oklch(42% 0.11 155); --green-700: oklch(35% 0.09 155);
+  --navy: oklch(25% 0.04 260); --navy-light: oklch(32% 0.04 260);
+  --cream: oklch(97.5% 0.012 80); --cream-dark: oklch(95% 0.018 78);
+  --neutral-100: oklch(96% 0.006 80); --neutral-200: oklch(91% 0.008 80);
+  --neutral-400: oklch(68% 0.006 80); --neutral-500: oklch(52% 0.006 80);
+  --neutral-600: oklch(40% 0.008 80); --neutral-700: oklch(30% 0.01 80);
+  --neutral-800: oklch(22% 0.012 80); --neutral-900: oklch(15% 0.01 80);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html { scroll-behavior: smooth; font-optical-sizing: auto; }
+body { font-family: 'Inter', system-ui, sans-serif; font-size: 1rem; line-height: 1.6; color: var(--neutral-800); background: var(--cream); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: 'Playfair Display', serif; text-wrap: balance; line-height: 1.15; }
+p { text-wrap: pretty; }
+img { max-width: 100%; height: auto; display: block; }
+
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; background: oklch(97.5% 0.012 80 / 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid oklch(90% 0.02 78 / 0.4); }
+.nav-logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; color: var(--green-700); }
+.nav-logo span { color: var(--gold-500); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-size: 0.85rem; font-weight: 500; color: var(--neutral-600); text-decoration: none; transition: color 0.2s; }
+.nav-link:hover { color: var(--green-600); }
+.nav-cta { background: var(--green-600); color: white; border: none; padding: 10px 22px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+.nav-cta:hover { background: var(--green-700); transform: translateY(-1px); }
+
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; padding: 130px 56px 80px; gap: 56px; max-width: 1380px; margin: 0 auto; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--green-50); border: 1px solid var(--green-100); color: var(--green-600); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 16px; border-radius: 100px; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(2.4rem, 4.5vw, 3.6rem); color: var(--neutral-900); margin-bottom: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.hero h1 em { color: var(--gold-500); font-style: italic; }
+.hero-desc { font-size: 1.08rem; color: var(--neutral-500); max-width: 48ch; margin-bottom: 36px; line-height: 1.75; font-weight: 300; }
+.btn-gold { display: inline-flex; align-items: center; gap: 12px; background: var(--gold-400); color: var(--neutral-900); border: none; padding: 18px 36px; border-radius: 100px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.25s var(--ease-out-expo); text-decoration: none; box-shadow: 0 8px 24px oklch(72% 0.145 72 / 0.3); }
+.btn-gold:hover { background: var(--gold-300); transform: translateY(-3px); box-shadow: 0 16px 40px oklch(72% 0.145 72 / 0.35); }
+.hero-hint { margin-top: 14px; font-size: 0.8rem; color: var(--neutral-400); font-style: italic; }
+.hero-visual { position: relative; }
+.hero-img-main { width: 100%; max-width: 560px; border-radius: 28px; object-fit: cover; aspect-ratio: 4/3; box-shadow: 0 32px 80px oklch(30% 0.05 70 / 0.18); }
+.hero-img-float { position: absolute; bottom: -24px; left: -36px; width: 220px; height: 160px; border-radius: 20px; object-fit: cover; box-shadow: 0 16px 48px oklch(20% 0.01 80 / 0.25); border: 5px solid var(--cream); animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.section { padding: 110px 56px; max-width: 1280px; margin: 0 auto; }
+.section-navy { background: var(--navy); max-width: none; padding: 110px 56px; color: white; }
+.section-navy .s-inner { max-width: 1280px; margin: 0 auto; }
+.section-cream { background: var(--cream-dark); max-width: none; padding: 110px 56px; }
+.section-cream .s-inner { max-width: 1280px; margin: 0 auto; }
+.s-label { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 12px; }
+.s-title { font-size: clamp(1.9rem, 3.2vw, 2.6rem); color: var(--neutral-900); margin-bottom: 16px; font-weight: 700; }
+.section-navy .s-title { color: white; }
+.s-desc { font-size: 1.02rem; color: var(--neutral-500); max-width: 56ch; line-height: 1.7; font-weight: 300; }
+.section-navy .s-desc { color: oklch(72% 0.005 80); }
+
+.problem-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.problem-list { display: flex; flex-direction: column; gap: 14px; }
+.problem-item { display: flex; align-items: flex-start; gap: 14px; padding: 18px 22px; background: white; border-radius: 14px; border: 1px solid var(--neutral-200); transition: transform 0.2s var(--ease-out-expo); }
+.problem-item:hover { transform: translateX(4px); }
+.problem-dot { width: 9px; height: 9px; flex-shrink: 0; margin-top: 7px; border-radius: 50%; background: var(--gold-400); }
+.problem-item p { font-size: 0.94rem; color: var(--neutral-600); }
+.problem-callout { margin-top: 24px; padding: 24px; background: var(--gold-100); border-radius: 14px; font-size: 0.92rem; color: var(--neutral-600); line-height: 1.7; font-style: italic; }
+.problem-img { width: 100%; border-radius: 24px; object-fit: cover; aspect-ratio: 1; box-shadow: 0 24px 64px oklch(20% 0.01 80 / 0.12); }
+
+.solution-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.sol-card { padding: 32px 24px; background: var(--navy-light); border-radius: 18px; border: 1px solid oklch(38% 0.03 260); transition: transform 0.25s var(--ease-out-expo), border-color 0.3s; }
+.sol-card:hover { transform: translateY(-5px); border-color: var(--gold-400); }
+.sol-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold-400); margin-bottom: 14px; }
+.sol-card h4 { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: white; margin-bottom: 8px; }
+.sol-card p { font-size: 0.86rem; color: oklch(68% 0.005 80); line-height: 1.6; }
+.solution-imgs { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.solution-imgs img { width: 100%; border-radius: 18px; object-fit: cover; aspect-ratio: 16/10; border: 2px solid oklch(38% 0.03 260); }
+
+.benefits-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; margin-top: 48px; }
+.benefit-row { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 28px; }
+.benefit-icon { flex-shrink: 0; width: 50px; height: 50px; border-radius: 13px; background: var(--gold-100); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+.benefit-content h4 { font-family: 'Inter', sans-serif; font-size: 1.02rem; font-weight: 600; color: var(--neutral-800); margin-bottom: 3px; }
+.benefit-content p { font-size: 0.87rem; color: var(--neutral-500); line-height: 1.5; }
+.benefits-img { width: 100%; border-radius: 24px; object-fit: cover; aspect-ratio: 3/4; box-shadow: 0 24px 64px oklch(30% 0.05 70 / 0.12); }
+
+.ingredients-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.ing-card { text-align: center; padding: 36px 20px; background: white; border-radius: 18px; border: 1px solid var(--neutral-200); transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s; }
+.ing-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px oklch(20% 0.01 80 / 0.08); }
+.ing-emoji { font-size: 2.4rem; margin-bottom: 14px; display: block; }
+.ing-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--neutral-800); margin-bottom: 6px; }
+.ing-card p { font-size: 0.83rem; color: var(--neutral-500); line-height: 1.5; }
+.ing-img-full { margin-top: 40px; width: 100%; border-radius: 20px; object-fit: cover; aspect-ratio: 21/9; box-shadow: 0 16px 48px oklch(20% 0.01 80 / 0.1); }
+
+.test-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.test-card { background: white; border-radius: 18px; padding: 32px 24px; border: 1px solid var(--neutral-200); position: relative; }
+.test-card::before { content: '"'; position: absolute; top: 16px; right: 20px; font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--gold-200); line-height: 1; }
+.test-quote { font-size: 0.9rem; color: var(--neutral-600); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.test-author { font-weight: 600; font-size: 0.88rem; color: var(--neutral-800); }
+.test-role { font-size: 0.78rem; color: var(--neutral-400); }
+.stats-row { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stat-box { text-align: center; padding: 32px 16px; border-radius: 18px; background: var(--gold-400); }
+.stat-box:nth-child(2) { background: var(--green-500); }
+.stat-box:nth-child(3) { background: var(--gold-600); }
+.stat-box:nth-child(4) { background: var(--green-600); }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: white; }
+.stat-txt { font-size: 0.78rem; color: oklch(100% 0 0 / 0.85); margin-top: 4px; }
+
+.products-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.prod-card { background: white; border-radius: 22px; overflow: hidden; border: 1px solid var(--neutral-200); transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s; }
+.prod-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px oklch(20% 0.01 80 / 0.1); }
+.prod-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+.prod-body { padding: 28px 24px; }
+.prod-body h3 { font-size: 1.3rem; margin-bottom: 14px; color: var(--neutral-900); }
+.prod-features { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.prod-features li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--neutral-600); }
+.prod-features li::before { content: '✓'; font-weight: 700; color: var(--green-500); flex-shrink: 0; }
+.use-tags { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.use-tag { background: var(--gold-100); border: 1px solid var(--gold-200); color: var(--gold-700); padding: 10px 22px; border-radius: 100px; font-size: 0.88rem; font-weight: 500; }
+
+.faq-list { margin-top: 40px; max-width: 720px; }
+.faq-item { border-bottom: 1px solid var(--neutral-200); }
+.faq-q { width: 100%; background: none; border: none; text-align: left; padding: 24px 0; font-size: 1.02rem; font-weight: 600; color: var(--neutral-800); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Inter', sans-serif; transition: color 0.2s; }
+.faq-q:hover { color: var(--green-600); }
+.faq-q svg { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.3s var(--ease-out-expo); color: var(--gold-500); }
+.faq-item.open .faq-q svg { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease-out-expo); }
+.faq-item.open .faq-a { max-height: 200px; padding-bottom: 24px; }
+.faq-a p { font-size: 0.9rem; color: var(--neutral-500); line-height: 1.7; }
+
+.cta-banner { margin: 80px 56px; padding: 80px 56px; background: var(--navy); border-radius: 28px; text-align: center; max-width: 1180px; margin-left: auto; margin-right: auto; position: relative; overflow: hidden; }
+.cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, oklch(65% 0.14 70 / 0.07) 0%, transparent 60%); }
+.cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); color: white; margin-bottom: 14px; position: relative; }
+.cta-banner p { font-size: 1rem; color: oklch(72% 0.005 80); margin-bottom: 36px; max-width: 50ch; margin-left: auto; margin-right: auto; position: relative; line-height: 1.7; }
+
+.form-section { padding: 110px 56px; background: var(--navy); }
+.form-layout { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: center; }
+.form-content h2 { font-size: clamp(1.7rem, 2.8vw, 2.3rem); color: white; margin-bottom: 14px; }
+.form-content p { font-size: 0.98rem; color: oklch(68% 0.005 80); margin-bottom: 28px; line-height: 1.7; }
+.form-checks { display: flex; flex-direction: column; gap: 14px; }
+.form-check { display: flex; align-items: center; gap: 12px; font-size: 0.88rem; color: oklch(75% 0.005 80); }
+.form-check::before { content: '✓'; font-weight: 700; color: var(--gold-400); }
+.lead-form { background: var(--navy-light); padding: 36px; border-radius: 22px; border: 1px solid oklch(38% 0.03 260); display: flex; flex-direction: column; gap: 16px; }
+.fg label { display: block; font-size: 0.76rem; font-weight: 600; color: oklch(72% 0.005 80); margin-bottom: 7px; letter-spacing: 0.04em; text-transform: uppercase; }
+.fg input, .fg select { width: 100%; padding: 14px 16px; border-radius: 11px; border: 1px solid oklch(38% 0.03 260); background: var(--navy); color: white; font-size: 0.94rem; font-family: 'Inter', sans-serif; transition: border-color 0.2s, box-shadow 0.2s; }
+.fg input::placeholder { color: oklch(48% 0.005 80); }
+.fg input:focus, .fg select:focus { outline: none; border-color: var(--gold-400); box-shadow: 0 0 0 3px oklch(72% 0.145 72 / 0.12); }
+.fg select option { background: var(--navy); color: white; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-submit { margin-top: 8px; width: 100%; background: var(--gold-400); color: var(--neutral-900); border: none; padding: 17px; border-radius: 100px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; box-shadow: 0 4px 16px oklch(72% 0.145 72 / 0.3); }
+.form-submit:hover { background: var(--gold-300); transform: translateY(-2px); }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.form-success { display: none; text-align: center; padding: 56px 24px; }
+.form-success h3 { color: white; font-size: 1.4rem; margin-bottom: 10px; }
+.form-success p { color: oklch(68% 0.005 80); font-size: 0.94rem; }
+
+footer { padding: 44px 56px; background: var(--navy); border-top: 1px solid oklch(30% 0.03 260); text-align: center; color: oklch(50% 0.005 80); font-size: 0.8rem; }
+
+.admin-toggle { position: fixed; bottom: 24px; right: 24px; width: 54px; height: 54px; border-radius: 50%; background: var(--navy); border: 2px solid var(--gold-400); color: var(--gold-400); cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px oklch(15% 0.01 80 / 0.4); transition: transform 0.2s; }
+.admin-toggle:hover { transform: scale(1.08); }
+.admin-badge { position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; border-radius: 50%; background: var(--gold-400); color: var(--neutral-900); font-size: 0.68rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.admin-overlay { display: none; position: fixed; inset: 0; background: oklch(10% 0.01 80 / 0.85); backdrop-filter: blur(6px); z-index: 2000; align-items: center; justify-content: center; padding: 24px; }
+.admin-overlay.show { display: flex; }
+.admin-box { background: white; border-radius: 22px; width: 100%; max-width: 880px; max-height: 85vh; overflow-y: auto; padding: 36px; }
+.admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.admin-head h3 { font-size: 1.2rem; color: var(--neutral-900); }
+.admin-x { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--neutral-200); background: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.admin-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.a-metric { text-align: center; padding: 18px 14px; border-radius: 14px; background: var(--cream); border: 1px solid var(--neutral-200); }
+.a-metric .num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--neutral-900); font-variant-numeric: tabular-nums; }
+.a-metric .lbl { font-size: 0.72rem; color: var(--neutral-500); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.a-table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--neutral-200); }
+.a-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+.a-table th { text-align: left; padding: 13px 14px; background: var(--neutral-100); font-weight: 600; color: var(--neutral-700); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--neutral-200); }
+.a-table td { padding: 12px 14px; border-bottom: 1px solid var(--neutral-100); color: var(--neutral-600); }
+.a-table tr:last-child td { border-bottom: none; }
+.a-empty { text-align: center; padding: 44px 20px; color: var(--neutral-400); font-size: 0.9rem; }
+.a-actions { margin-top: 20px; display: flex; gap: 12px; }
+.a-btn { padding: 11px 22px; border-radius: 10px; font-size: 0.83rem; font-weight: 600; cursor: pointer; border: 1px solid var(--neutral-200); background: white; color: var(--neutral-700); font-family: 'Inter', sans-serif; transition: all 0.2s; }
+.a-btn:hover { background: var(--neutral-100); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo); }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; padding: 110px 24px 56px; gap: 36px; }
+  .hero-visual { order: -1; }
+  .hero-img-float { display: none; }
+  .section, .section-navy, .section-cream, .form-section { padding: 72px 24px; }
+  .problem-grid, .benefits-layout, .products-grid, .form-layout { grid-template-columns: 1fr; gap: 36px; }
+  .solution-grid, .test-grid, .ingredients-grid { grid-template-columns: 1fr; }
+  .solution-imgs { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .cta-banner { margin: 48px 20px; padding: 48px 24px; border-radius: 20px; }
+  .admin-metrics { grid-template-columns: 1fr 1fr; }
+  .lead-form { padding: 24px 18px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">Nutri<span>Sana</span></div>
+  <div class="nav-links">
+    <a href="#beneficios" class="nav-link">Beneficios</a>
+    <a href="#ingredientes" class="nav-link">Ingredientes</a>
+    <a href="#producto" class="nav-link">Producto</a>
+    <a href="#formulario" class="nav-cta">Registrarme</a>
+  </div>
+</nav>
+
+<section class="hero" id="inicio">
+  <div>
+    <div class="hero-badge">🌿 Snack funcional saludable</div>
+    <h1>Energía <em>equilibrada</em> para estudiar y trabajar</h1>
+    <p class="hero-desc">NutriSana combina avena integral, omega-3, vitaminas B, cañihua y jalea real. Diseñado para jóvenes de 19 a 27 años que necesitan una alternativa real a los ultraprocesados.</p>
+    <a href="#formulario" class="btn-gold">Quiero conocer NutriSana <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <p class="hero-hint">Descubrirás ingredientes, beneficios y cómo incorporarlo a tu rutina.</p>
+  </div>
+  <div class="hero-visual">
+    <img src="https://i.imgur.com/Y8fNGcj.png" alt="NutriSana Snack Funcional" class="hero-img-main">
+    <img src="https://solnatural.bio/views/img/recipesphotos/417.jpg?i=6734" alt="Barrita NutriSana con jalea real" class="hero-img-float">
+  </div>
+</section>
+
+<section class="section reveal" id="problema">
+  <div><span class="s-label">El problema</span><h2 class="s-title">¿Tus días también se sienten así?</h2></div>
+  <div class="problem-grid">
+    <div>
+      <div class="problem-list">
+        <div class="problem-item"><div class="problem-dot"></div><p>Sales temprano de casa sin tiempo para un desayuno completo</p></div>
+        <div class="problem-item"><div class="problem-dot"></div><p>Estudias toda la mañana y trabajas por la tarde</p></div>
+        <div class="problem-item"><div class="problem-dot"></div><p>Corres de un lugar a otro sin tiempo para cocinar</p></div>
+        <div class="problem-item"><div class="problem-dot"></div><p>Reemplazas comidas por galletas industriales o café</p></div>
+        <div class="problem-item"><div class="problem-dot"></div><p>Al final del día: cansancio, falta de concentración</p></div>
+      </div>
+      <div class="problem-callout">"No es falta de interés por comer mejor. Es que tu rutina no te ofrece opciones saludables, rápidas y accesibles."</div>
+    </div>
+    <img src="https://i.imgur.com/WCdHeh2.png" alt="Empaque NutriSana" class="problem-img">
+  </div>
+</section>
+
+<section class="section-navy" id="solucion">
+  <div class="s-inner">
+    <div class="reveal"><span class="s-label">Nuestra solución</span><h2 class="s-title">NutriSana nació para acompañar tu ritmo</h2><p class="s-desc">Un snack funcional para estudiantes y jóvenes trabajadores. Energía sostenida, ingredientes reales, sin exceso de azúcares.</p></div>
+    <div class="solution-grid reveal">
+      <div class="sol-card"><div class="sol-num">01</div><h4>Sustituye ultraprocesados</h4><p>Reemplaza snacks industriales con una alternativa que nutre de verdad.</p></div>
+      <div class="sol-card"><div class="sol-num">02</div><h4>Energía que dura</h4><p>Ingredientes de liberación gradual que mantienen tu rendimiento.</p></div>
+      <div class="sol-card"><div class="sol-num">03</div><h4>Listo para llevar</h4><p>Cabe en tu mochila. Consume cuando lo necesites.</p></div>
+      <div class="sol-card"><div class="sol-num">04</div><h4>100% transparente</h4><p>Conoces cada ingrediente. Sin sorpresas.</p></div>
+      <div class="sol-card"><div class="sol-num">05</div><h4>Mejores hábitos</h4><p>Incorpora nutrición real sin cambiar toda tu rutina.</p></div>
+    </div>
+    <div class="solution-imgs reveal">
+      <img src="https://i.imgur.com/xktVEj5.png" alt="Presentación NutriSana frente y dorso">
+      <img src="https://i.imgur.com/CndnPVc.png" alt="Presentación bolsa y stick NutriSana">
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="beneficios">
+  <span class="s-label">Beneficios</span><h2 class="s-title">¿Por qué elegir NutriSana?</h2>
+  <div class="benefits-layout">
+    <div>
+      <div class="benefit-row"><div class="benefit-icon">⚡</div><div class="benefit-content"><h4>Energía sostenida por horas</h4><p>Avena integral e ingredientes funcionales que estabilizan tu energía toda la jornada.</p></div></div>
+      <div class="benefit-row"><div class="benefit-icon">🎒</div><div class="benefit-content"><h4>Fácil de transportar</h4><p>Presentación individual compacta que cabe en cualquier mochila o cartera.</p></div></div>
+      <div class="benefit-row"><div class="benefit-icon">🔬</div><div class="benefit-content"><h4>Ingredientes con respaldo</h4><p>Omega-3, vitaminas B, cañihua, jalea real. Cada componente tiene un propósito.</p></div></div>
+      <div class="benefit-row"><div class="benefit-icon">😋</div><div class="benefit-content"><h4>Delicioso sabor</h4><p>Alimentarte mejor también puede ser un momento agradable.</p></div></div>
+      <div class="benefit-row"><div class="benefit-icon">💰</div><div class="benefit-content"><h4>Precio accesible</h4><p>Pensado para el presupuesto real de estudiantes y jóvenes trabajadores.</p></div></div>
+    </div>
+    <img src="https://es.cravingsjournal.com/wp-content/uploads/2019/10/galletas-de-avena-y-chocolate-4.jpg" alt="Galletas NutriSana de avena con chocolate" class="benefits-img">
+  </div>
+</section>
+
+<section class="section-cream" id="ingredientes">
+  <div class="s-inner">
+    <div class="reveal"><span class="s-label">Composición</span><h2 class="s-title">Ingredientes que trabajan por ti</h2></div>
+    <div class="ingredients-grid reveal">
+      <div class="ing-card"><span class="ing-emoji">🌾</span><h4>Avena Integral</h4><p>Fuente de fibra. Energía de liberación gradual.</p></div>
+      <div class="ing-card"><span class="ing-emoji">🧠</span><h4>Omega-3</h4><p>Contribuye al funcionamiento normal del cerebro.</p></div>
+      <div class="ing-card"><span class="ing-emoji">⚡</span><h4>Vitaminas B</h4><p>Metabolismo energético y sistema nervioso.</p></div>
+      <div class="ing-card"><span class="ing-emoji">🏔️</span><h4>Cañihua</h4><p>Superalimento andino: proteínas, hierro, calcio.</p></div>
+      <div class="ing-card"><span class="ing-emoji">🍯</span><h4>Jalea Real</h4><p>Vitaminas y aminoácidos naturales.</p></div>
+      <div class="ing-card"><span class="ing-emoji">🍫</span><h4>Chocolate oscuro</h4><p>Sabor y antioxidantes naturales.</p></div>
+    </div>
+    <img src="https://i.imgur.com/njfE5jn.png" alt="Barritas NutriSana cortadas mostrando ingredientes" class="ing-img-full reveal">
+  </div>
+</section>
+
+<section class="section reveal" id="testimonios">
+  <span class="s-label">Validación</span><h2 class="s-title">Jóvenes como tú ya validaron NutriSana</h2>
+  <div class="test-grid">
+    <div class="test-card"><p class="test-quote">"En épocas de exámenes reemplazo comidas por snacks dulces. Me gustaría tener una opción práctica que me ayude a sentirme mejor durante el día."</p><p class="test-author">Gladys</p><p class="test-role">20 años, estudiante universitaria</p></div>
+    <div class="test-card"><p class="test-quote">"Tomo café varias veces al día para mantenerme despierta. Me gustaría un snack que pueda llevar en mi mochila sin que se aplaste."</p><p class="test-author">Dayana</p><p class="test-role">23 años, estudia y trabaja</p></div>
+    <div class="test-card"><p class="test-quote">"Siempre reviso los ingredientes antes de comprar. Me gustó que NutriSana muestre claramente su información nutricional."</p><p class="test-author">Luis</p><p class="test-role">27 años, profesional</p></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num">93%</div><div class="stat-txt">Lo consideró práctico</div></div>
+    <div class="stat-box"><div class="stat-num">60%</div><div class="stat-txt">Prefirió la barrita</div></div>
+    <div class="stat-box"><div class="stat-num">4.2/5</div><div class="stat-txt">Intención de compra</div></div>
+    <div class="stat-box"><div class="stat-num">+85%</div><div class="stat-txt">Destacó sabor</div></div>
+  </div>
+</section>
+
+<section class="section-cream" id="producto">
+  <div class="s-inner">
+    <div class="reveal"><span class="s-label">Presentaciones</span><h2 class="s-title">¿Qué incluye NutriSana?</h2></div>
+    <div class="products-grid reveal">
+      <div class="prod-card">
+        <img src="https://i.imgur.com/pjxCVdb.png" alt="Galletas funcionales NutriSana" class="prod-img">
+        <div class="prod-body"><h3>Galletas Funcionales</h3>
+          <ul class="prod-features">
+            <li>4 galletas individuales de avena integral</li>
+            <li>Fuente de omega-3 y vitaminas B</li>
+            <li>Chips de chocolate oscuro natural</li>
+            <li>Empaque individual fácil de transportar</li>
+            <li>Sin colorantes artificiales</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prod-card">
+        <img src="https://i.imgur.com/frTabFc.png" alt="Barrita funcional NutriSana" class="prod-img">
+        <div class="prod-body"><h3>Barrita Funcional</h3>
+          <ul class="prod-features">
+            <li>Barrita de avena y cañihua andina</li>
+            <li>Frutos secos y semillas seleccionadas</li>
+            <li>Sachet de jalea real incluido</li>
+            <li>Vitaminas del complejo B añadidas</li>
+            <li>Formato práctico para cualquier momento</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="use-tags reveal">
+      <span class="use-tag">📚 Entre clases</span>
+      <span class="use-tag">💼 Durante el trabajo</span>
+      <span class="use-tag">🚌 En el transporte</span>
+      <span class="use-tag">⚡ Antes de una jornada exigente</span>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="faq">
+  <span class="s-label">Preguntas frecuentes</span><h2 class="s-title">Resolvemos tus dudas</h2>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q">¿NutriSana reemplaza una comida?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><p>No. Es un snack para complementar una alimentación equilibrada cuando necesitas una opción rápida.</p></div></div>
+    <div class="faq-item"><button class="faq-q">¿Quiénes pueden consumirlo?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><p>Jóvenes y adultos que buscan una alternativa práctica y nutritiva.</p></div></div>
+    <div class="faq-item"><button class="faq-q">¿Tiene conservantes o exceso de azúcar?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><p>Sin conservantes artificiales. Contenido moderado de azúcares naturales.</p></div></div>
+    <div class="faq-item"><button class="faq-q">¿Dónde puedo llevarlo?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><p>Mochila, cartera, escritorio o lonchera.</p></div></div>
+    <div class="faq-item"><button class="faq-q">¿Dónde estará disponible?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><p>Kioscos universitarios, bodegas y venta online.</p></div></div>
+  </div>
+</section>
+
+<div class="cta-banner reveal">
+  <h2>Empieza hoy a cambiar tus días</h2>
+  <p>Deja de depender de ultraprocesados. Descubre una alternativa diseñada para quienes estudian y trabajan.</p>
+  <a href="#formulario" class="btn-gold" style="position:relative;">Quiero conocer NutriSana <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<section class="form-section" id="formulario">
+  <div class="form-layout">
+    <div class="form-content reveal">
+      <h2>Sé de los primeros en probar NutriSana</h2>
+      <p>Déjanos tus datos y te avisaremos cuando esté disponible.</p>
+      <div class="form-checks">
+        <div class="form-check">Tu información está segura</div>
+        <div class="form-check">Recibirás acceso anticipado</div>
+        <div class="form-check">Podrás elegir tu presentación</div>
+        <div class="form-check">Sin compromiso de compra</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="lead-form" id="leadForm">
+        <div class="form-row">
+          <div class="fg"><label for="nombre">Nombre completo</label><input type="text" id="nombre" placeholder="Tu nombre" required></div>
+          <div class="fg"><label for="edad">Edad</label><input type="number" id="edad" placeholder="22" min="15" max="60" required></div>
+        </div>
+        <div class="fg"><label for="email">Correo electrónico</label><input type="email" id="email" placeholder="tu@correo.com" required></div>
+        <div class="fg"><label for="telefono">Teléfono / WhatsApp (opcional)</label><input type="tel" id="telefono" placeholder="+51 999 999 999"></div>
+        <div class="fg"><label for="ocupacion">Ocupación principal</label><select id="ocupacion" required><option value="" disabled selected>Selecciona</option><option value="Solo estudio">Solo estudio</option><option value="Solo trabajo">Solo trabajo</option><option value="Estudio y trabajo">Estudio y trabajo</option><option value="Otro">Otro</option></select></div>
+        <div class="fg"><label for="preferencia">¿Qué presentación te interesa?</label><select id="preferencia" required><option value="" disabled selected>Selecciona</option><option value="Galletas funcionales">Galletas funcionales</option><option value="Barrita funcional">Barrita funcional</option><option value="Ambas">Ambas me interesan</option></select></div>
+        <button type="submit" class="form-submit" id="submitBtn">Quiero ser de los primeros →</button>
+      </form>
+      <div class="form-success" id="formSuccess"><h3>🎉 ¡Registro exitoso!</h3><p>Gracias por tu interés. Te contactaremos con novedades.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer><p>NutriSana © 2026 · Snack funcional para estudiantes y trabajadores · Hecho con 💛 en Perú</p></footer>
+
+<button class="admin-toggle" id="adminToggle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span class="admin-badge" id="adminBadge">0</span></button>
+
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-box">
+    <div class="admin-head"><h3>📊 Métricas y Respuestas</h3><button class="admin-x" id="adminClose">✕</button></div>
+    <div class="admin-metrics">
+      <div class="a-metric"><div class="num" id="mVisits">0</div><div class="lbl">Adquisición</div></div>
+      <div class="a-metric"><div class="num" id="mScroll">0%</div><div class="lbl">Interacción</div></div>
+      <div class="a-metric"><div class="num" id="mForms">0</div><div class="lbl">Retención</div></div>
+      <div class="a-metric"><div class="num" id="mRate">0%</div><div class="lbl">Conversión</div></div>
+    </div>
+    <p style="font-size:0.82rem;color:#666;margin-bottom:16px;">Registros enviados a Google Sheets + respaldo local.</p>
+    <div id="tableContainer"></div>
+    <div class="a-actions">
+      <button class="a-btn" id="exportBtn">📥 Exportar CSV</button>
+      <button class="a-btn" id="clearBtn" style="color:red;">🗑️ Limpiar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyYLQPhHWLUZnNknuEuMdRHupsSOG7gAQ9TTZOIJaxX3LjOjbiD_7UCffhINiVj3iDA/exec';
+
+const MK='ns_m',LK='ns_l';
+function gM(){try{return JSON.parse(localStorage.getItem(MK))||{v:0,s:0,f:0}}catch(e){return{v:0,s:0,f:0}}}
+function gL(){try{return JSON.parse(localStorage.getItem(LK))||[]}catch(e){return[]}}
+function sM(m){localStorage.setItem(MK,JSON.stringify(m))}
+(function(){var m=gM();m.v++;sM(m)})();
+var mxS=0,tk=false;
+window.addEventListener('scroll',function(){if(!tk){requestAnimationFrame(function(){var p=Math.round((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100);if(p>mxS){mxS=p;var m=gM();if(p>m.s){m.s=p;sM(m)}}tk=false});tk=true}});
+document.getElementById('leadForm').addEventListener('submit',function(e){
+  e.preventDefault();var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Enviando...';
+  var d={nombre:document.getElementById('nombre').value,edad:document.getElementById('edad').value,email:document.getElementById('email').value,telefono:document.getElementById('telefono').value||'No proporcionado',ocupacion:document.getElementById('ocupacion').value,preferencia:document.getElementById('preferencia').value,fecha:new Date().toLocaleString('es-PE')};
+  var leads=gL();leads.push(d);localStorage.setItem(LK,JSON.stringify(leads));var m=gM();m.f++;sM(m);uB();
+  if(GOOGLE_SHEET_URL&&GOOGLE_SHEET_URL!=='PEGA_TU_URL_AQUI'){fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(){sS()}).catch(function(){sS()})}else{sS()}
+});
+function sS(){document.querySelector('.lead-form').style.display='none';document.getElementById('formSuccess').style.display='block'}
+function uB(){document.getElementById('adminBadge').textContent=gL().length}
+function rA(){var m=gM(),leads=gL();document.getElementById('mVisits').textContent=m.v;document.getElementById('mScroll').textContent=m.s+'%';document.getElementById('mForms').textContent=m.f;document.getElementById('mRate').textContent=m.v>0?((m.f/m.v)*100).toFixed(1)+'%':'0%';var c=document.getElementById('tableContainer');if(!leads.length){c.innerHTML='<div class="a-empty">Aún no hay registros.</div>';return}var h='<div class="a-table-wrap"><table class="a-table"><thead><tr><th>#</th><th>Nombre</th><th>Edad</th><th>Email</th><th>Teléfono</th><th>Ocupación</th><th>Preferencia</th><th>Fecha</th></tr></thead><tbody>';leads.forEach(function(l,i){h+='<tr><td>'+(i+1)+'</td><td>'+l.nombre+'</td><td>'+l.edad+'</td><td>'+l.email+'</td><td>'+l.telefono+'</td><td>'+l.ocupacion+'</td><td>'+l.preferencia+'</td><td>'+l.fecha+'</td></tr>'});h+='</tbody></table></div>';c.innerHTML=h}
+document.getElementById('adminToggle').addEventListener('click',function(){document.getElementById('adminOverlay').classList.add('show');rA()});
+document.getElementById('adminClose').addEventListener('click',function(){document.getElementById('adminOverlay').classList.remove('show')});
+document.getElementById('adminOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});
+document.getElementById('exportBtn').addEventListener('click',function(){var leads=gL();if(!leads.length)return alert('No hay datos');var csv='Nombre,Edad,Email,Teléfono,Ocupación,Preferencia,Fecha\n';leads.forEach(function(l){csv+='"'+l.nombre+'",'+l.edad+',"'+l.email+'","'+l.telefono+'","'+l.ocupacion+'","'+l.preferencia+'","'+l.fecha+'"\n'});var b=new Blob([csv],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='nutrisana_leads.csv';a.click()});
+document.getElementById('clearBtn').addEventListener('click',function(){if(confirm('¿Eliminar datos?')){localStorage.removeItem(LK);localStorage.removeItem(MK);rA();uB()}});
+uB();
+document.querySelectorAll('.faq-q').forEach(function(b){b.addEventListener('click',function(){var it=this.closest('.faq-item'),w=it.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open')});if(!w)it.classList.add('open')})});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+</script>
+</body>
+</html>
